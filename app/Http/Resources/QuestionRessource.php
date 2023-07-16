@@ -7,13 +7,18 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class QuestionRessource extends JsonResource
 {
+
     /**
-     * Transform the resource into an array.
+     * Transforme le modèle Pairs et ses données en une représentation json
      *
      * @return array<string, mixed>
      */
     public function toArray(Request $request): array
-    {
-        return parent::toArray($request);
+    {   
+        return[
+            'id'=>$this->id,
+            'title' => $this->title,
+            'type' => $this->types->type
+        ];
     }
 }

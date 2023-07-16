@@ -19,6 +19,6 @@ class Option extends Model
     //Relation entre la table options et la table questions (les propositions appartiennent à une question de la table survey_questions)
     public function question()
     {
-        return $this->belongsTo(SurveyQuestions::class);
+        return $this->belongsTo(SurveyQuestions::class, 'question_id');
     }
 }

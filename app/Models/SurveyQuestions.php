@@ -29,11 +29,11 @@ class SurveyQuestions extends Model
    //Relation entre la table Survey_questions et la table types (Chaque question a un type)
     public function types()
     {
-        return $this->belongsTo(Type::class);
+        return $this->belongsTo(Type::class, 'type_id');
     }
 
      //Relation entre la table Survey_questions et la table Survey_response (une question a une seule réponse)
-     public function question_number()
+     public function response()
      {
          return $this->hasOne(SurveyResponses::class);
      }
