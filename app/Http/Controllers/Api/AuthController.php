@@ -19,7 +19,7 @@ class AuthController extends Controller
         //On vérifie si l'utilisateur rentre bien ses informations
 
         $request->validate([
-            "email" => "required",
+            "email" => "required|email",
             "password" => "required"
         ], 
         [
@@ -37,15 +37,14 @@ class AuthController extends Controller
             //Je fais un token pour l'administrateur (qui expire dans 10 heures)
             //Si $user est une instance du modèle user
             if ($user instanceof User) {
-                $token = $user->createToken("user_token",  ['*'], now()->addHours(2))->plainTextToken;
-                $user->token = $token; //On stocke le token dans la table.
+                $token = $user->createToken("user_token",  ['*'], now()->addHours(2))->plainTextToken;  
                 $user->save();
             } 
 
             if($user->role_id == 1){
                 //Si le role_id est égal à 1 alors on confirme qu'il s'agit de l'admin
                 return response()->json([
-                    "status"=>'OK',
+                    "status"=>'Done',
                     "message"=>"Vous êtes connecté en tant qu'administrateur.",
                     "user"=>$user,
                     "token"=>$token
