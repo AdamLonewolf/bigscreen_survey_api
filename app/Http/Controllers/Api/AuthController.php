@@ -19,11 +19,11 @@ class AuthController extends Controller
         //On vérifie si l'utilisateur rentre bien ses informations
 
         $request->validate([
-            "name" => "required",
+            "email" => "required",
             "password" => "required"
         ], 
         [
-            "name.required" => "Votre nom d'utilisateur est requis",
+            "email.required" => "Votre email est requis",
             "password.required" => "Votre mot de passe est requis"
         ]);
 
