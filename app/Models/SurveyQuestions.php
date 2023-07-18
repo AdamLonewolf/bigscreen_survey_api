@@ -23,7 +23,7 @@ class SurveyQuestions extends Model
 
     public function propositions()
     {
-        return $this->hasMany(Option::class);
+        return $this->hasMany(Option::class,'question_id');
     }
 
    //Relation entre la table Survey_questions et la table types (Chaque question a un type)

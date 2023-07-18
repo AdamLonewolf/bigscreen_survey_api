@@ -8,7 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class ResponseRessource extends JsonResource
 {
     /**
-     * Transforme le modèle Pairs et ses données en une représentation json
+     * Transforme le modèle SurveyResponses et ses données en une représentation json
      *
      * @return array<string, mixed>
      */
