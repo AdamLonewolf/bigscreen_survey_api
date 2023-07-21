@@ -17,6 +17,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id'
     ];
 
     //Relation entre la table users et la table roles (un utilisateur a un rôle)

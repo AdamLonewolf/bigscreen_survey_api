@@ -70,17 +70,15 @@ class SurveyController extends Controller
         try{
 
         //Dans la table survey_responses, je regarde  les enregistrements, précisement la colonne user_token où on voit le token qui a été récupéré
-
-        $response = DB::table('survey_responses')
-        ->whereIn('user_token', $token)
-        ->get(); //une fois qu'on trouve l'enregistrement qui a le token reçu, on récupère toutes les informations
+        $response = SurveyResponses::where('user_token', $token)
+            ->get(); //une fois qu'on trouve l'enregistrement qui a le token reçu, on récupère toutes les informations
 
         //On retourne les réponses de cet utilisateur sous format json
 
         return response()->json([
             'status' => "Done",
             'message' => 'La liste des réponses de l\'utilisateur',
-            'data' => $response
+            'data' => ResponseRessource::collection($response),
              //On chaque objet de la collection en un tableau JSON
         ]);
 
@@ -104,25 +102,29 @@ class SurveyController extends Controller
         try{
 
             //Je récupère les réponses envoyées depuis le front-end sous format json 
-            $data = $request->json()->all();
 
+            $data = $request->json()->all();
+           
             //Je cherche à enregistrer l'email de l'utilisateur dans la table Users
 
-            $user = User::where('email', $data['email'])->first(); //Je cherche dans la table users un enregistrement qui contient l'email qui a été envoyé depuis le front.
+            $user = User::where('email', $data['responses'][0]['email'])->first();
 
             //S'il n'existe aucun enregistrement avec cet email, alors je le crée
-            if(!$user){
-                $user = User::create([
-                    'email' => $data['email'],
-                ]);
-            }
 
+            if (!$user) {
+            $user = User::create([
+                'email' => $data['responses'][0]['email'],
+                'role_id' => 2
+            ]);
+             }
+       
             //Je fais une boucle qui va itérer le tableau 'responses', je récupère les différentes informations et je les enregistre dans ma table survey_responses
+
             foreach($data['responses'] as $response){
                 SurveyResponses::create([
                     'question_id' => $response['question_id'],
-                    'user_id' => $user->id,
                     'user_token' => $response['user_token'],
+                    'user_email' => $response['email'],
                     'user_response' => $response['user_response']
                 ]);
             }

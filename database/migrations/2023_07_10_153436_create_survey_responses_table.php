@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('survey_responses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('question_id')->references('id')->on('survey_questions')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('user_id')->references('id')->on('survey_questions')->onDelete('cascade')->onUpdate('cascade');
             $table->string('user_token');
+            $table->string('user_email');
             $table->string('user_response');
             $table->timestamps();
         });

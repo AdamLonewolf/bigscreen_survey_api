@@ -12,13 +12,15 @@ class SurveyResponses extends Model
     protected $table = "survey_responses";
     protected $primaryKey = "id";
     protected $fillable = [
-        'user_responses',
+        'question_id',
+        'user_email',
+        'user_response',
         'user_token',
     ];
 
      //Relation entre la table Survey_questions et la table Survey_response (Une réponse est liée a une question)
      public function question_number()
      {
-         return $this->belongsTo(SurveyQuestions::class);
+         return $this->belongsTo(SurveyQuestions::class, 'question_id');
      }
 }

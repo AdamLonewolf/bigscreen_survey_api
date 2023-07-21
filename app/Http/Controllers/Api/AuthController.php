@@ -71,7 +71,7 @@ class AuthController extends Controller
             $user = User::findOrfail($id); //On recherche l'id de l'admin
             $user->tokens()->delete(); //on supprime tous les tokens de l'utilisateur.
             return response()->json([
-                "status"=> 'OK',
+                "status"=> 'Done',
                 "message"=> "Vous avez été déconnecté avec succès"
             ]);
         } catch (Exception $e) {

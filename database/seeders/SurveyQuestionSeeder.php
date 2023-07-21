@@ -20,7 +20,7 @@ class SurveyQuestionSeeder extends Seeder
 
         $question = new SurveyQuestions();
         $question->title = "Votre âge ?";
-        $question->type_id = 2 ;
+        $question->type_id = 3 ;
         $question->save();
 
         $question = new SurveyQuestions();
@@ -102,12 +102,12 @@ class SurveyQuestionSeeder extends Seeder
 
         $question = new SurveyQuestions();
         $question->title = "Aimeriez-vous pouvoir enregistrer des émissions TV pour pouvoir les regarder ultérieurement ?";
-        $question->type_id = 3 ;
+        $question->type_id = 1 ;
         $question->save();
 
         $question = new SurveyQuestions();
         $question->title = "Aimeriez-vous jouer à des jeux exclusifs sur votre Bigscreen ?";
-        $question->type_id = 3 ;
+        $question->type_id = 1 ;
         $question->save();
 
         $question = new SurveyQuestions();
