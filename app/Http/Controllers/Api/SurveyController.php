@@ -47,7 +47,7 @@ class SurveyController extends Controller
 
             return response()->json([
                 'status' => "Done",
-                'message' => 'Liste des questions',
+                'message' => 'Liste des réponses',
                 'data' => ResponseRessource::collection(SurveyResponses::all()),
                  //On chaque objet de la collection en un tableau JSON
             ]);
