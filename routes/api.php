@@ -43,13 +43,9 @@ Route::get('/ping',function(){
 
 Route::get('/questions', [SurveyController::class, 'index']);
 
-//Route permettant de récupérer la liste intégrale des questions
-
-Route::get('/responses', [SurveyController::class, 'responses']);
-
 //Route Permettant de récupérer les réponses d'un utilisateur spécifique.
 
-Route::get('/responses/{token}', [SurveyController::class, 'getAnswer']);
+Route::get('/responses/{token}', [SurveyController::class, 'getResponse']);
 
 //Route Permettant de soumettre les réponses d’un utilisateur en fonction de la question. 
 
@@ -59,7 +55,13 @@ Route::post('/submit_responses', [SurveyController::class, 'submit']);
 
 Route::get('/generate_token', [SurveyController::class, 'generateToken']);
 
+//Route pour récupérer les réponses de tous les utilisateur en fonction de leur token (paginée)
 
+Route::get('/user/responses/{page}',[SurveyController::class, 'getUserResponses']);
+
+//Route pour compter les réponses envoyées par les utilisateurs (pour les statistiques)
+
+Route::get('/count/responses',[SurveyController::class, 'countResponses']);
 
 //--Routes pour l’authentification
 

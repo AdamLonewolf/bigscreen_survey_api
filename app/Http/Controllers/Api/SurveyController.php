@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\QuestionRessource;
 use App\Http\Resources\ResponseRessource;
 use App\Models\User;
+use Illuminate\Support\Collection;
 
 class SurveyController extends Controller
 {
@@ -37,20 +38,96 @@ class SurveyController extends Controller
         }
     }
 
-
-    /**
-     * Fonction pour récupérer la liste intégrale des réponses
+      /**
+     * Fonction pour compter les réponses des utilisateurs
      */
 
-     public function responses(){
+     public function countResponses(){
+
         try{
+            
+            $responses = SurveyResponses::all(); //je récupère toutes les réponses
+
+            //Je compte les propositions de réponses dans ma table survey responses où l'id de la question est 6
+            $responsesQuestion6 = $responses
+            ->where('question_id', 6)
+            ->countBy('user_response');
+
+            //Je compte les propositions de réponses dans ma table survey responses où l'id de la question est 7
+            $responsesQuestion7 = $responses
+            ->where('question_id', 7)
+            ->countBy('user_response');
+
+             //Je compte les propositions de réponses dans ma table survey responses où l'id de la question est 8
+            $responsesQuestion8 = $responses
+            ->where('question_id', 8)
+            ->countBy('user_response');
+
+               // Je compte les propositions de réponses pour chaque question (11 à 15) et je calcule la moyenne
+
+            //Pour chaque id dans le tableau,je calcule la moyenne pour chaque question
+
+               $questionIds = [11, 12, 13, 14, 15];
+               $averages = [];
+            foreach ($questionIds as $questionId) {
+                $average = $responses->where('question_id', $questionId)->avg('user_response'); //je calcule la moyenne des réponses de chaque question
+                $averages["question_{$questionId}"] = $average; //je la stocke dans un tableau
+            }
 
             return response()->json([
                 'status' => "Done",
-                'message' => 'Liste des réponses',
-                'data' => ResponseRessource::collection(SurveyResponses::all()),
-                 //On chaque objet de la collection en un tableau JSON
+                'message' => 'Nombre de propositions donné par les utilisateurs',
+                'question_6' => $responsesQuestion6,
+                'question_7' => $responsesQuestion7,
+                'question_8' => $responsesQuestion8,
+                'question_quality' => $averages
+             
             ]);
+    
+    
+            } catch (Exception $e) {
+                return response()->json([
+                    'status' => "Error",
+                    'error' => $e->getMessage() 
+                ]);
+            }
+    
+     }
+
+
+    /**
+     * Fonction pour récupérer les réponses de tous les utilisateur en fonction de leur token
+     */
+    public function getUserResponses($page){
+
+        try{
+
+    
+        // Je récupère d'abord les tokens de chaque utilisateur distinctement (il n'y aura pas de doublons).
+        $userTokens = SurveyResponses::distinct('user_token')->pluck('user_token');
+        
+        $per_page = 2; //Nombre d'éléments par page (pagination)
+
+         // Je calcule le nombre total de pages en fonction du nombre de tokens et du nombre d'éléments par page (pagination)
+        $totalPage = ceil($userTokens->count() / $per_page);   
+
+        // Je récupère les tokens pour les page actuelle (ex : il y'aura les réponses de 3 utilisateurs pour la page 1 et ainsi de suite)
+        $currentTokens = $userTokens->skip(($page - 1) * $per_page)->take($per_page);
+
+        //Je parcours le tableau des token et pour chaque token, je récupère ses réponses
+        $responses = [];
+        foreach ($currentTokens as $token) {
+            $responses[$token] = SurveyResponses::where('user_token', $token)->get();
+        }
+        
+        return response()->json([
+            'status' => "Done",
+            'message' => 'Liste des réponses des utilisateurs',
+            'data' => ResponseRessource::collection($responses),
+            'currentPage' => $page, //Nombre de la page actuelle
+            'totalPage' => $totalPage //Nombre total de pages
+        ]);
+
 
         } catch (Exception $e) {
             return response()->json([
@@ -58,14 +135,16 @@ class SurveyController extends Controller
                 'error' => $e->getMessage() 
             ]);
         }
-     }
+
+    }
+
 
     /**
      * Cette fonction va permettre de récupérer les réponses d'un utilisateur spécifique
      * token = token de l'utilisateur
      */
 
-     public function getAnswer($token){
+     public function getResponse($token){
 
         try{
 
