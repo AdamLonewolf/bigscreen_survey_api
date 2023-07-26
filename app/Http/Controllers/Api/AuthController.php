@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
        /**
-     * Fonction qui servira à vérifier les données de l'utilisateur (admin) lorsqu'il se connecte
+     * rôle : Fonction qui servira à vérifier les données de l'utilisateur (admin) lorsqu'il se connecte
+     * @param: $request : va récupérer les données envoyées depuis le front via une requête http
      */
 
      public function login(Request $request){
@@ -61,7 +62,8 @@ class AuthController extends Controller
     }
 
       /**
-     * Fonction pour déconnecter l'utilisateur
+     * rôle : Fonction pour déconnecter l'admin
+     * @param: $id : l'id de l'admin
      */
     
      

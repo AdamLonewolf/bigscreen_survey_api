@@ -17,7 +17,8 @@ use Illuminate\Support\Collection;
 class SurveyController extends Controller
 {
     /**
-     * Cette fonction va retourner la liste des questions 
+     * rôle : Cette fonction va retourner la liste des questions 
+     * @param: aucun
      */
 
     public function index(){
@@ -39,7 +40,8 @@ class SurveyController extends Controller
     }
 
       /**
-     * Fonction pour compter les réponses des utilisateurs
+     * rôle : Fonction pour compter les réponses des utilisateurs
+     * @param: aucun
      */
 
      public function countResponses(){
@@ -96,7 +98,8 @@ class SurveyController extends Controller
 
 
     /**
-     * Fonction pour récupérer les réponses de tous les utilisateur en fonction de leur token
+     * rôle: Fonction pour récupérer les réponses de tous les utilisateur en fonction de leur token
+     * @param  $page (number) : permet de renvoyer la page sur laquelle nous sommes.
      */
     public function getUserResponses($page){
 
@@ -140,8 +143,8 @@ class SurveyController extends Controller
 
 
     /**
-     * Cette fonction va permettre de récupérer les réponses d'un utilisateur spécifique
-     * token = token de l'utilisateur
+     * rôle : Cette fonction va permettre de récupérer les réponses d'un utilisateur spécifique
+     * @param $token = token de l'utilisateur
      */
 
      public function getResponse($token){
@@ -173,8 +176,7 @@ class SurveyController extends Controller
      
     /**
      * Cette fonction va permettre de soumettre les réponses d’un utilisateur en fonction de la question.
-     * id = id de la question
-     * token = token de l'utilisateur
+     *@param $request: va récupérer les données envoyées depuis le front via une requête http
      */
     public function submit(Request $request){
         
@@ -224,7 +226,8 @@ class SurveyController extends Controller
     }
 
     /**
-     * Fonction qui va permettre de générer un token
+     * rôle : Fonction qui va permettre de générer un token
+     * @param: aucun
      */
     public function generateToken(){
        

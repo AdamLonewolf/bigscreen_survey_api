@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Table qui va réunir toutes les questions
+     * Table qui va lister toutes les questions du sondage
      */
     public function up(): void
     {

@@ -8,8 +8,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class OptionResource extends JsonResource
 {
     /**
-     * Transforme le modèle Options et ses données en une représentation json
-     *
+     * rôle: Transforme le modèle Options et ses données en une représentation json
+     * @param  $request : $request : va récupérer les données envoyées depuis le front via une requête http
      * @return array<string, mixed>
      */
     public function toArray(Request $request): array
