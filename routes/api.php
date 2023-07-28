@@ -55,8 +55,8 @@ Route::post('/submit_responses', [SurveyController::class, 'submit']);
 
 Route::get('/generate_token', [SurveyController::class, 'generateToken']);
 
-//Route pour récupérer les réponses de tous les utilisateur en fonction de leur token (paginée)
-
+//Route pour récupérer les réponses de tous les utilisateurs en fonction de leur token (paginée)
+ 
 Route::get('/user/responses/{page}',[SurveyController::class, 'getUserResponses']);
 
 //Route pour compter les réponses envoyées par les utilisateurs (pour les statistiques)
